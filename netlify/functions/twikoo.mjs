@@ -1,4 +1,11 @@
-import handleTwikoo from 'twikoo-netlify';
+// Keep the database name aligned with the Atlas user's readWrite role.
+if (process.env.MONGODB_URI) {
+  const mongoUri = new URL(process.env.MONGODB_URI);
+  mongoUri.pathname = '/twikoo';
+  process.env.MONGODB_URI = mongoUri.toString();
+}
+
+const { default: handleTwikoo } = await import('twikoo-netlify');
 
 const allowedOrigins = new Set([
   'https://liuzhining.com',
